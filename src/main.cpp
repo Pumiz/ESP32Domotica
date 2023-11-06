@@ -1,44 +1,46 @@
-// Include the library files
-#include <BlynkSimpleEsp32.h>
-#include <WiFiClient.h>
 #include <Wire.h>
+#include <WiFiClient.h>
+
 
 #define BLYNK_TEMPLATE_ID "TMPL2hJWNJaVw"
-#define BLYNK_TEMPLATE_NAME "ESP32Domotica"
-#define PIN_RELAY 4
+#define BLYNK_TEMPLATE_NAME "Quickstart Template"
+#define BLYNK_AUTH_TOKEN "HjUNOxsKGQ3rb9_Y9BqwrtRiYtRaGxNB"
+#include <BlynkSimpleEsp32.h>
+#define sensor 33
+#define relay 4
 
 BlynkTimer timer;
 
 // Enter your Auth token
-char auth[] = "HjUNOxsKGQ3rb9_Y9BqwrtRiYtRaGxNB";
+const char auth[] = "HjUNOxsKGQ3rb9_Y9BqwrtRiYtRaGxNB";
 
-// Enter your WIFI SSID and password
-char ssid[] = "Estudiantes";
-char pass[] = "educar_2018";
+//Enter your WIFI SSID and password
+const char ssid[] = "Estudiantes";
+const char pass[] = "educar_2018";
 
 void setup() {
-  // Debug console
   Serial.begin(9600);
   Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
-  pinMode(PIN_RELAY, OUTPUT);
-  digitalWrite(PIN_RELAY, HIGH);
-
+  pinMode(relay, OUTPUT);
+  digitalWrite(relay, HIGH);
   Serial.println("Cargando sistema");
 }
 
-// Get the button value
-BLYNK_WRITE(V1) {
-  bool PIN_RELAY = param.asInt();
-  if (PIN_RELAY == 1) {
-    digitalWrite(PIN_RELAY, LOW);
-    Serial.println("Motor encendido");
+//Get the button value
+BLYNK_WRITE(V0) {
+  bool Relay = param.asInt();
+  if (Relay == 1) {
+    digitalWrite(relay, LOW);
+    Serial.println("Motor apagado");
   } else {
-    digitalWrite(PIN_RELAY, HIGH);
-    Serial.println("Motor encendido");
+    digitalWrite(relay, HIGH);
+    Serial.println("Motor andando");
   }
 }
 
 void loop() {
-  Blynk.run(); // Run the Blynk library
+  Blynk.run();//Run the Blynk library
+
   delay(200);
+
 }
